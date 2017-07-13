@@ -91,6 +91,7 @@
 			_hls.addEventListener(HLSEvent.MANIFEST_LOADED, _manifestHandler);
 			_hls.addEventListener(HLSEvent.MEDIA_TIME, _mediaTimeHandler);
 			_hls.addEventListener(HLSEvent.PLAYBACK_STATE, _stateHandler);
+			_hls.addEventListener(HLSEvent.ID3_UPDATED, _ID3Handler);
 
 			_hls.stream.soundTransform = new SoundTransform(_volume);
 			_video.attachNetStream(_hls.stream);
@@ -319,6 +320,10 @@
 			if (_autoplay) {
 				_hls.stream.play();
 			}
+		}
+		private function _ID3Handler(event:HLSEvent) : void {
+			log(event);
+			sendEvent("onID3", event.ID3Data);
 		}
 		private function _mediaTimeHandler(event: HLSEvent): void {
 			_position = event.mediatime.position;
